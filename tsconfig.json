@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+      "target": "es5",                          
+      "lib": ["dom", "dom.iterable", "esnext"],        "allowJs": true,                          
+      "skipLibCheck": true,                     
+      "esModuleInterop": true,                 
+      "allowSyntheticDefaultImports": true,     
+      "strict": true,                           
+      "forceConsistentCasingInFileNames": true, 
+      "module": "esnext",                       
+      "moduleResolution": "node",               
+      "resolveJsonModule": true,                // Allow importing JSON files as modules
+      "isolatedModules": true,                  // Treat each file as an isolated module
+      "noEmit": true,                           // Do not emit output files (CRA handles it)
+      "jsx": "react-jsx"                        // Use the new JSX runtime introduced in React 17
+    },
+    "include": [
+      "src"                                      // Include all files in the `src` directory
+    ],
+    "exclude": [
+      "node_modules",                            
+      "build"                                    
+    ],
+    "baseUrl": "src",
+"paths": {
+  "@components/*": ["src/components/*"]
+  }
+}
+  
