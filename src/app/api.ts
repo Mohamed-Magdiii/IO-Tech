@@ -9,6 +9,7 @@ const api: AxiosInstance = axios.create({
   },
 });
 
+// any addition token I can add here with interceptors
 
 
 export default api;

@@ -1,4 +1,3 @@
-// components/Modal.tsx
 import React from 'react';
 import {ModalProps} from '../models/Modals'
 

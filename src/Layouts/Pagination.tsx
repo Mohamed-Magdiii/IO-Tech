@@ -7,8 +7,7 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
-  // Determine which page group we are on (each group has 5 pages)
-  const groupSize = 5;
+  const groupSize = 10;
   const startPage = Math.floor((currentPage - 1) / groupSize) * groupSize + 1;
   const endPage = Math.min(startPage + groupSize - 1, totalPages);
 
