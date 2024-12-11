@@ -10,9 +10,9 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 px-4">
       <Header />
-      <div className="my-auto mx-auto py-8 px-4">
+      <div className="py-8 ">
   <div className="flex justify-end mb-6">
     <button
       onClick={handleCreatePost}
