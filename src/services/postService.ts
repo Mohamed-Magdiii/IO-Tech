@@ -4,9 +4,7 @@ import { Post } from '../models/Posts';
 const API_URL = '/posts';
 
 const getAllPosts = async () => {
-  const response = await api.get(API_URL);
-  console.log(response);
-  
+  const response = await api.get(API_URL);  
   return response.data;
 };
 

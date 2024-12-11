@@ -9,4 +9,5 @@ const Header: React.FC = React.memo(() => {
   );
 });
 
+// this is Header component will be resuable and also not need to be render every time so i used react memo
 export default Header;

@@ -35,6 +35,7 @@ const PostForm: React.FC = () => {
     if (id) {
       await updatePost(parseInt(id, 10), newPost);
     } else {
+     newPost.id=  posts[posts.length -1].id +1
       await addPost(newPost);
     }
     navigate('/');

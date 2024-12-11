@@ -1,7 +1,9 @@
+// PostContext.tsx
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Post } from '../models/Posts';
-import api from '../app/api';  // mock API
-
+import { PaginationProvider } from './layouts/paginationContext';  
+import postService from '../services/postService';
 interface PostContextType {
   posts: Post[];
   loading: boolean;
@@ -9,11 +11,6 @@ interface PostContextType {
   addPost: (newPost: Post) => void;
   updatePost: (id: number, updatedPost: Post) => void;
   deletePost: (id: number) => void;
-  currentPage: number;
-  totalPages: number;
-  changePage: (page: number) => void;
-  postsPerPage: number;
-  getPaginatedPosts: () => Post[];
 }
 
 const PostContext = createContext<PostContextType | undefined>(undefined);
@@ -34,18 +31,13 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children }) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [postsPerPage] = useState<number>(6);
-
-  // Dynamically calculate the total pages based on the posts length
-  const totalPages = Math.ceil(posts.length / postsPerPage);
 
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/posts'); // Assume this is a mock API
-        setPosts(response.data);  // Set posts when fetched
+        const response = await postService.getAllPosts();
+        setPosts(response);
       } catch (err) {
         setError('Failed to fetch posts');
       } finally {
@@ -53,40 +45,25 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children }) => {
       }
     };
     fetchPosts();
-  }, []);  // Only fetch once on component mount
-
-  useEffect(() => {
-    // Recalculate pagination whenever posts change
-    setCurrentPage(1); // Reset to page 1 on posts change
-  }, [posts]);  // Triggered when posts are added/updated/deleted
-
-  const getPaginatedPosts = () => {
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    return posts.slice(indexOfFirstPost, indexOfLastPost);
-  };
-
-  const changePage = (page: number) => {
-    setCurrentPage(page);
-  };
+  }, []);
 
   const addPost = (newPost: Post) => {
     setPosts((prevPosts) => {
       const updatedPosts = [...prevPosts, newPost];
-      return updatedPosts; // Add post and trigger re-render
+      return updatedPosts;
     });
   };
 
   const updatePost = (id: number, updatedPost: Post) => {
     setPosts((prevPosts) =>
-      prevPosts.map((post) => (post.id === id ? updatedPost : post)) // Update post in state
+      prevPosts.map((post) => (post.id === id ? updatedPost : post))
     );
   };
 
   const deletePost = (id: number) => {
     setPosts((prevPosts) => {
-      const updatedPosts = prevPosts.filter((post) => post.id !== id); // Remove post
-      return updatedPosts;  // Trigger re-render with updated posts
+      const updatedPosts = prevPosts.filter((post) => post.id !== id);
+      return updatedPosts;
     });
   };
 
@@ -99,14 +76,9 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children }) => {
         addPost,
         updatePost,
         deletePost,
-        currentPage,
-        totalPages,
-        changePage,
-        postsPerPage,
-        getPaginatedPosts,
       }}
     >
-      {children}
+      <PaginationProvider posts={posts}>{children}</PaginationProvider>
     </PostContext.Provider>
   );
 };
