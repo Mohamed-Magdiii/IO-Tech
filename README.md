@@ -17,5 +17,5 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ### Url Vercel  for deployment project 
-[https://io-tech-aamp5v1og-mohamedmagdiiis-projects.vercel.app/]
+[https://io-tech.vercel.app/]
 
